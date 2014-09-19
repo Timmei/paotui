@@ -7,16 +7,55 @@
 //
 
 #import "AppDelegate.h"
+//#import "APIKey.h"
+#import <MAMapKit/MAMapKit.h>
+#import "LoginViewController.h"
+
+const static NSString *APIKey = @"85c55e3c31092ca99c32049d46e0f8d1";
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [MAMapServices sharedServices].apiKey = (NSString *)APIKey;
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+ 
+    
+    
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UserViewController *userView = [story instantiateViewControllerWithIdentifier:@"user"];
+    [userView.view setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width*0.75, [UIScreen mainScreen].bounds.size.height)];
+    
+    HomeViewController *homeView = [story instantiateViewControllerWithIdentifier:@"home"];
+    
+    [QHSliderViewController sharedSliderController].LeftVC = (UIViewController*)userView;
+    
+    [QHSliderViewController sharedSliderController].MainVC = (UIViewController*)homeView;
+    
+    UINavigationController *naviC = [[UINavigationController alloc] initWithRootViewController:[QHSliderViewController sharedSliderController]];
+    self.window.rootViewController = naviC;
+//    self.window.rootViewController = homeView;
+    
+    [self performSelector:@selector(aaaa) withObject:nil afterDelay:0.5];
+    
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)aaaa
+{
+    if (1==2) {
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginView = [story instantiateViewControllerWithIdentifier:@"login"];
+        [[QHSliderViewController sharedSliderController].navigationController presentViewController:loginView animated:YES completion:nil];
+        
+//        [[QHSliderViewController sharedSliderController].navigationController pushViewController:loginView animated:YES];
+      
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

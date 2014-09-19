@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserViewController.h"
+
+@class HomeViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
